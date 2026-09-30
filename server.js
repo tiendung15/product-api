@@ -17,7 +17,7 @@ app.use('/api/products', productRoutes);
 
 // Root route (kiểm tra nhanh server sống hay chưa)
 app.get('/', (req, res) => {
-  res.send('Product API is running');
+  res.send('Product API is running - v2');
 });
 
 // Kết nối MongoDB rồi mới khởi động server
