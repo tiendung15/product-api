@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: nammongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - product-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  product-api:
+    build: .
+    container_name: product-api-container
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - product-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  product-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
