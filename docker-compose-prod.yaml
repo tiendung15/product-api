@@ -11,7 +11,7 @@ services:
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 10s
-      timeout: 6s
+      timeout: 5s
       retries: 5
       start_period: 10s
 
@@ -30,7 +30,7 @@ services:
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
       interval: 10s
-      timeout: 6s
+      timeout: 5s
       retries: 5
       start_period: 10s
 
