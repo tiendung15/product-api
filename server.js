@@ -31,3 +31,7 @@ mongoose.connect(MONGO_URI)
   .catch((err) => {
     console.error('MongoDB connection error:', err);
   });
+  // Health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'up' : 'down' });
+});
