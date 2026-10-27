@@ -17,10 +17,10 @@ const productSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-    required: true
+    required: false
   }
 }, {
-  timestamps: false
+  timestamps: true
 });
 
 module.exports = mongoose.model('Product', productSchema);
