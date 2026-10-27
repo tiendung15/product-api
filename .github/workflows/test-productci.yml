@@ -22,5 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run basic syntax check
-        run: node -e "require('./server.js')" &
+      - name: Run tests
+        run: npm test
